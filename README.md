@@ -27,6 +27,3 @@ CampusConnect is a web-based platform that helps students discover upcoming camp
 └── README.md # Project documentation
 
  Getting Started
-
-1. Clone the repository:
-2. 
