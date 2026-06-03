@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header with Logo and Navigation -->
+    <header>
+        <div class="logo-section">
+            <div class="logo">MUT</div>
+            <span class="Murang'a University of Technology">Murang'a University of Technology</span>
+        </div>
+        <nav>
+             <ul>
+                <li><a href="landingPage.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Banner Section -->
+    <section class="banner" id="home">
+        <h1>Welcome to Murang'a University of Technology</h1>
+        <p>Empowering Future Leaders Through Excellence in Education</p>
+    </section>
+
+    <!-- Slideshow Section -->
+    <div class="slideshow-container">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200" alt="Campus Life">
+                <div class="slide-content">
+                    <h3>Campus Life</h3>
+                    <p>Experience a vibrant and enriching campus environment</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=1200" alt="Modern Facilities">
+                <div class="slide-content">
+                    <h3>Modern Facilities</h3>
+                    <p>State-of-the-art infrastructure and learning resources</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200" alt="Academic Excellence">
+                <div class="slide-content">
+                    <h3>Academic Excellence</h3>
+                    <p>Quality education that prepares you for success</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200" alt="Student Activities">
+                <div class="slide-content">
+                    <h3>Student Activities</h3>
+                    <p>Participate in clubs, sports, and cultural events</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Arrow Navigation -->
+        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        
+        <!-- Dots -->
+        <div class="dots" id="dots"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#" title="Facebook"><img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="24" height="24"></a>
+                <a href="#" title="Twitter"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" width="24" height="24"></a>
+                <a href="#" title="Instagram"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="24" height="24"></a>
+                <a href="#" title="LinkedIn"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="24" height="24"></a>
+            </div>
+            <p class="copyright">&copy; 2026 MUT. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Slideshow -->
+    <script>
+        let slideIndex = 0;
+        const slides = document.getElementById('slides');
+        const dotsContainer = document.getElementById('dots');
+        const totalSlides = 4;
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'dot';
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function showSlides() {
+            if (slideIndex >= totalSlides) {
+                slideIndex = 0;
+            } else if (slideIndex < 0) {
+                slideIndex = totalSlides - 1;
+            }
+            
+            slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+            
+            // Update dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.className = index === slideIndex ? 'dot active' : 'dot';
+            });
+        }
+
+        function changeSlide(n) {
+            slideIndex += n;
+            showSlides();
+        }
+
+        function goToSlide(n) {
+            slideIndex = n;
+            showSlides();
+        }
+
+        // Auto slide every 3 seconds
+        let autoSlide = setInterval(() => {
+            slideIndex++;
+            showSlides();
+        }, 3000);
+
+        // Pause on hover
+        const slideshowContainer = document.querySelector('.slideshow-container');
+        slideshowContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoSlide);
+        });
+        slideshowContainer.addEventListener('mouseleave', () => {
+            autoSlide = setInterval(() => {
+                slideIndex++;
+                showSlides();
+            }, 3000);
+        });
+
+        // Initialize
+        showSlides();
+    </script>
+</body>
+</html>
+

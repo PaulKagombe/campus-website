@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Murang'a University of Technology</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+           
+    </head>
+<body>
+    <!-- Header with Logo and Navigation -->
+    <header>
+        <div class="logo-section">
+            <div class="logo">MUT</div>
+            <span class="Murang'a University of Technology">Murang'a University of Technology</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="landingPage.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Register Header -->
+    <section class="register-header">
+        <h1>Event Registration</h1>
+        <p>Sign Up for Upcoming Events</p>
+    </section>
+
+    <!-- Register Section -->
+    <section class="register-section" id="register">
+        <div class="register-form">
+            <div class="success-message" id="successMessage">
+                Registration submitted successfully! We will contact you soon.
+            </div>
+
+            <form id="registrationForm" onsubmit="return validateForm(event)">
+                <!-- Student Admission Number -->
+                <div class="form-group">
+                    <label for="admissionNumber">Student Admission Number</label>
+                    <input type="text" id="admissionNumber" name="admissionNumber" placeholder="Enter your admission number">
+                    <div class="error-message" id="admissionError">Please enter a valid admission number</div>
+                </div>
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name">
+                    <div class="error-message" id="nameError">Please enter your full name</div>
+                </div>
+
+                <!-- Event Selection -->
+                <div class="form-group">
+                    <label for="eventSelect">Select Event</label>
+                    <select id="eventSelect" name="eventSelect">
+                        <option value="">-- Select an Event --</option>
+                        <option value="cultural-week">Cultural Week</option>
+                        <option value="sports-day">Sports Day</option>
+                        <option value="students-election">Students Election</option>
+                        <option value="tree-planting">Tree Planting</option>
+                    </select>
+                    <div class="error-message" id="eventError">Please select an event</div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address">
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                  <a href="#" title="Facebook"><img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="24" height="24"></a>
+                <a href="#" title="Twitter"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" width="24" height="24"></a>
+                <a href="#" title="Instagram"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="24" height="24"></a>
+                <a href="#" title="LinkedIn"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="24" height="24"></a>
+            </div>
+            <p class="copyright">&copy; 2026 MUT. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Validation -->
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            
+            let isValid = true;
+            
+            // Get form fields
+            const admissionNumber = document.getElementById('admissionNumber');
+            const fullName = document.getElementById('fullName');
+            const eventSelect = document.getElementById('eventSelect');
+            const email = document.getElementById('email');
+            
+            // Reset error states
+            resetErrors([admissionNumber, fullName, eventSelect, email]);
+            
+            // Validate Admission Number
+            if (admissionNumber.value.trim() === '') {
+                showError(admissionNumber, 'admissionError');
+                isValid = false;
+            } else if (admissionNumber.value.trim().length < 5) {
+                showError(admissionNumber, 'admissionError');
+                isValid = false;
+            }
+            
+            // Validate Name
+            if (fullName.value.trim() === '') {
+                showError(fullName, 'nameError');
+                isValid = false;
+            } else if (fullName.value.trim().length < 3) {
+                showError(fullName, 'nameError');
+                isValid = false;
+            } else if (!/^[a-zA-Z\s]+$/.test(fullName.value.trim())) {
+                showError(fullName, 'nameError');
+                isValid = false;
+            }
+            
+            // Validate Event Selection
+            if (eventSelect.value === '') {
+                showError(eventSelect, 'eventError');
+                isValid = false;
+            }
+            
+            // Validate Email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.value.trim() === '') {
+                showError(email, 'emailError');
+                isValid = false;
+            } else if (!emailRegex.test(email.value.trim())) {
+                showError(email, 'emailError');
+                isValid = false;
+            }
+            
+            // If form is valid, show success message
+            if (isValid) {
+                $('#successMessage').css('display', 'block').hide().fadeIn(500);
+                document.getElementById('registrationForm').reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    $('#successMessage').fadeOut(500, function() {
+                        $(this).css('display', '');
+                    });
+                }, 5000);
+            }
+            
+            return false;
+        }
+        
+        function showError(inputElement, errorId) {
+            inputElement.classList.add('error');
+            document.getElementById(errorId).classList.add('show');
+        }
+        
+        function resetErrors(elements) {
+            elements.forEach(element => {
+                element.classList.remove('error');
+            });
+            
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(message => {
+                message.classList.remove('show');
+            });
+            
+            $('#successMessage').hide();
+        }
+        
+        // Real-time validation on input
+        document.getElementById('admissionNumber').addEventListener('input', function() {
+            if (this.value.trim().length >= 5) {
+                this.classList.remove('error');
+                document.getElementById('admissionError').classList.remove('show');
+            }
+        });
+        
+        document.getElementById('fullName').addEventListener('input', function() {
+            if (/^[a-zA-Z\s]+$/.test(this.value.trim()) && this.value.trim().length >= 3) {
+                this.classList.remove('error');
+                document.getElementById('nameError').classList.remove('show');
+            }
+        });
+        
+        document.getElementById('eventSelect').addEventListener('change', function() {
+            if (this.value !== '') {
+                this.classList.remove('error');
+                document.getElementById('eventError').classList.remove('show');
+            }
+        });
+        
+        document.getElementById('email').addEventListener('input', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailRegex.test(this.value.trim())) {
+                this.classList.remove('error');
+                document.getElementById('emailError').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
